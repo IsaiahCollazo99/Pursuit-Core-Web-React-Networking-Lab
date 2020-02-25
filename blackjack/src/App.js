@@ -16,6 +16,12 @@ class App extends React.Component {
   handleGenerateDeck = () => {
     this.setState({deckId: "random"});
   } // End of handleGenerateDeck() function
+
+  componentDidUpdate() {
+    if(this.state.deckId === "random") {
+      
+    }
+  } // End of componentDidUpdate() function
   
   render = () => {
     return (

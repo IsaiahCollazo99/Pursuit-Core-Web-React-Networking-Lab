@@ -10,7 +10,7 @@ class Menu extends React.Component {
                     e.preventDefault();
                     handleSubmit(e.target.children[1].value);
                 }}>
-                    <label for="deckId">Input Existing Deck: </label>
+                    <label htmlFor="deckId">Input Existing Deck: </label>
                     <input name="deckId" type="text" />
                     <button type="submit">Draw</button>
                 </form>
