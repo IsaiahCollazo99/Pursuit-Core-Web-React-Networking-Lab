@@ -1,6 +1,7 @@
 import React from 'react';
-import './App.css';
+import axios from 'axios';
 import Menu from './Components/Menu';
+import './App.css';
 
 class App extends React.Component {
 
@@ -10,18 +11,31 @@ class App extends React.Component {
   }
 
   handleSubmit = (deckId) => {
-    this.setState({deckId});
+    this.setState((prevState) => ({deckId}));
+    this.drawCards();
   } // End of handleSubmit() function
 
   handleGenerateDeck = () => {
     this.setState({deckId: "random"});
   } // End of handleGenerateDeck() function
 
-  componentDidUpdate() {
-    if(this.state.deckId === "random") {
-      
+  async componentDidUpdate() {
+    try {
+      if(this.state.deckId === "random") {
+        let res = await axios.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
+        this.setState((prevState) => ({deckId: res.data.deck_id}));
+        this.drawCards();
+      } else {
+        this.drawCards();
+      }
+    } catch(err) {
+      console.log(err);
     }
   } // End of componentDidUpdate() function
+
+  drawCards = () => {
+
+  } // End of drawCards() function
   
   render = () => {
     return (
