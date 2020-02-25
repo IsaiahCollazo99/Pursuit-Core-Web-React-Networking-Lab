@@ -5,12 +5,12 @@ class Hand extends React.Component {
     render = () => {
         let {hand} = this.props;
         let cards = hand.map(card => {
-            return <Card img={card.image} value={card.value} />
+            return <Card img={card.image} value={card.value} key={card.code}/>
         })
         return (
-            <div>
-
-            </div>
+            <ul>
+                {cards}
+            </ul>
         )
     }
 }

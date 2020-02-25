@@ -8,6 +8,7 @@ class App extends React.Component {
 
   state = {
     deckId: "",
+    cardsRemaining: 0,
     hand: []
   }
 
@@ -20,14 +21,17 @@ class App extends React.Component {
     this.setState({deckId: "random"});
   } // End of handleGenerateDeck() function
 
-  async componentDidUpdate() {
+  async componentDidUpdate(prevProps, prevState) {
     try {
-      if(this.state.deckId === "random") {
-        let res = await axios.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
-        this.setState((prevState) => ({deckId: res.data.deck_id}));
-        this.drawCards();
-      } else {
-        this.drawCards();
+      if((prevState.cardsRemaining !== this.state.cardsRemaining && this.state.cardsRemaining !== 52)|| this.state.cardsRemaining === 0) {
+        debugger;
+        if(this.state.deckId === "random") {
+          let res = await axios.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
+          this.setState((prevState) => ({deckId: res.data.deck_id, cardsRemaining: res.data.remaining}));
+          this.drawCards();
+        } else {
+          this.drawCards();
+        }
       }
     } catch(err) {
       console.log(err);
