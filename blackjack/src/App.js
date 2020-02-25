@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Menu from './Components/Menu';
+import Hand from './Components/Hand';
 import './App.css';
 
 class App extends React.Component {
@@ -33,14 +34,21 @@ class App extends React.Component {
     }
   } // End of componentDidUpdate() function
 
-  drawCards = () => {
-
+  drawCards = async () => {
+    let { deckId } = this.state;
+    try {
+      let res = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`);
+      this.setState((prevState) => ({hand: res.data.cards}))
+    } catch (err) {
+      console.log(err);
+    }
   } // End of drawCards() function
   
   render = () => {
     return (
       <div className="App">
         <Menu handleSubmit={this.handleSubmit} handleGenerate={this.handleGenerateDeck}/>
+        <Hand hand={this.state.hand}></Hand>
       </div>
     );
   }
